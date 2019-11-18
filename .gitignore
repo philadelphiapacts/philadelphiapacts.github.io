@@ -1,0 +1,11 @@
+.idea/
+.DS_Store
+package-lock.json
+node_modules
+env.sh
+yarn-error.log
+venv/*
+server/__pycache__/*
+*.pyc
+*.iml
+build/
