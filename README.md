@@ -1,1 +1,3 @@
-# Philadelphia Pacts Map
+# Philadelphia Pacts
+https://philadelphiapacts.github.io/#/
+
