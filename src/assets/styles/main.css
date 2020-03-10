@@ -15,12 +15,17 @@ body {
 
 html,
 body {
+    overflow-y: hidden;
     overflow-x: hidden;
     height: 100vh;
     width: 100vw;
     margin: 0;
     padding: 0;
     background-color: #F8F9FA;
+}
+
+html {
+    overflow-y: hidden;
 }
 
 #auth-root {
@@ -55,12 +60,6 @@ body {
     border-bottom: solid 1px lightgray;
 }
 
-.map-list {
-    max-height: calc(100vh - 115px);
-    overflow-y: scroll;
-    padding: 0 12px;
-}
-
 .no-span {
     display: table;
     white-space: nowrap;
@@ -75,12 +74,11 @@ body {
 .count:before {
     content: "";
     display: block;
-    border-top: solid 1px lightgray;
+    border-top: solid 1px #E0E0E0;
     width: 100%;
     height: 2px;
     position: absolute;
     top: 50%;
-    z-index: 0;
 }
 
 .count span {
@@ -91,11 +89,73 @@ body {
     color: gray;
 }
 
+#map {
+    width: 100vw;
+    position: absolute;
+    top: 70px;
+    pointer-events: auto;
+}
+
+.map-list {
+    position: relative;
+    width: 100vw;
+    z-index: 2;
+    max-height: calc(100vh - 70px);
+    overflow-y: scroll;
+}
+
+.map-container {
+    background: white;
+    padding-top: 10px;
+    border-radius: 10px;
+}
+
 .map-cell {
-    border: solid lightgray 1px;
-    padding: 16px;
-    margin-bottom: 12px;
+    border-top: solid #E0E0E0;
     background-color: white;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    transition: border-left 0.2s;
+}
+
+.map-overlay {
+    height: calc(60vh - 12px);
+}
+
+.map-cell:hover {
+    border-left: solid #0069D9 10px;
+}
+
+.scroll-indicator {
+    margin-bottom: 12px;
+    border-radius: 10px;
+    height: 5px;
+    width: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #E0E0E0;
+}
+
+.cell-container {
+    padding-bottom: 100px;
+}
+
+.scroll-indicator:hover {
+    background-color: gray;
+}
+
+.map-list.sticky {
+    overflow-y: scroll;
+}
+
+.cell-container.sticky {
+    max-height: 100%;
+    overflow-y: scroll;
+}
+
+.padder {
+    padding-left: 12px;
+    padding-right: 12px;
 }
 
 .point {
@@ -107,6 +167,7 @@ body {
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
+    transition: all 400ms;
 }
 
 .form-wrapper {
@@ -157,6 +218,31 @@ body {
     }
     .step-wrapper {
         padding: 20px 0 20px 60px;
+    }
+    .map-list {
+        padding-top: 0;
+        width: 50vw;
+        transition: width 200ms;
+        max-height: calc(100vh - 70px);
+    }
+    .map-list.expand {
+        width: 100vw;
+    }
+    .map-container {
+        padding-top: 0;
+        border-radius: 0;
+    }
+    #map {
+        width: 50vw;
+        transition: width 200ms;
+        position: relative;
+        top: 0;
+    }
+    #map.map-hide {
+        width: 0;
+    }
+    .cell-container {
+        padding-bottom: 30px;
     }
 }
 
@@ -271,6 +357,12 @@ body {
     flex-direction: row;
     flex-wrap: nowrap;
     overflow-x: hidden;
+}
+
+.reverse-column {
+    display: flex;
+    flex-direction: column;
+    flex-flow: column-reverse;
 }
 
 
@@ -417,8 +509,6 @@ body {
     padding: 1.5rem 2rem;
     background-position: center center;
     background-size: cover;
-    -webkit-filter: grayscale(100%);
-    filter: gray;
     object-fit: cover;
 }
 
@@ -430,19 +520,15 @@ body {
 .view-container {
     overflow: hidden;
     width: 95%;
-    height: calc(100vh - 56px);
-    height: -moz-calc(100vh - 56px);
-    height: -webkit-calc(100vh - 56px);
+    height: calc(100vh - 70px);
+    height: -moz-calc(100vh - 70px);
+    height: -webkit-calc(100vh - 70px);
     padding-left: 15px;
     padding-right: 15px;
 }
 
 .switch-view-button {
     margin: 0 15px;
-}
-
-.filter-toggle {
-    padding: 12;
 }
 
 .view-row {
@@ -460,4 +546,16 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
+}
+
+.not-found-oops {
+    color: black;  /* Fallback: assume this color ON TOP of image */
+    background-image: url("../img/blue-stars.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 15em;
 }
