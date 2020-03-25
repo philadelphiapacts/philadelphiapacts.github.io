@@ -14,6 +14,7 @@ import ProviderInfo from "./ProviderInfo";
 import Modal from "react-bootstrap/Modal";
 import options from "../utils/options";
 import { FaMapPin, FaPhone, FaTimesCircle, FaLocationArrow, FaMap } from "react-icons/fa";
+import { AiOutlineFileSearch } from "react-icons/ai";
 import localizationStrings from '../utils/Localization';
 import API_KEY from '../config/keys';
 
@@ -26,7 +27,7 @@ const colors = {
     ages: '#534666',
     insurance: '#CD7672',
     languages: '#240E8B',
-    therapyTypes: '#787FF6',
+    therapyTypes: '#787FF6'
 };
 
 const getWidth = () => window.innerWidth
@@ -502,32 +503,50 @@ const Index = (props) => {
                                     !isEmpty(activeProviders) &&
                                     activeProviders.map(renderCell)
                                 }
+                                {
+                                        evaluateFilters() && isEmpty(activeProviders) && (
+                                            <div style={{
+                                                display: "flex",
+                                                flexDirection: "row",
+                                                justifyContent: "center",
+                                                alignItems: "flex-end",
+                                                color: "gray",
+                                                paddingTop: "50px"
+                                            }}>
+                                                <div>
+                                                    <AiOutlineFileSearch size={128}/>
+                                                </div>
+                                                <div>
+                                                    <span style={{ fontWeight: 700, fontSize: "20px" }}>Whoops!</span>
+                                                    <div>
+                                                        Sorry that we don't have providers that match your search.
+                                                    </div>
+                                                    <div>
+                                                        Adjust the filters or try different keywords to see more results.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )
+                                    }
                             </div>
                             <div >
                                 {
                                     activeProviders && activeProviders[selectedIndex] &&
                                     <Modal
-                                        show = { showModal }
-                                        onHide = {() => setShowModal(false)}
-                                        size = "lg"
-                                        scrollable >
-                                        <Modal.Header
-                                            className = "image-cover"
-                                            style = {{ backgroundImage: `url(${activeProviders[selectedIndex].imageURL})` }}
-                                            closeButton >
-                                            <Modal.Title id = "contained-modal-title-vcenter" >
-                                                <h2>
-                                                    <b>
-                                                        { activeProviders[selectedIndex].facilityName }
-                                                    </b>
-                                                </h2>
-                                            </Modal.Title>
-                                        </Modal.Header>
-                                        <Modal.Body
-                                            className = "modal-body" >
-                                            <ProviderInfo item = { activeProviders[selectedIndex] }/>
-                                        </Modal.Body>
-                                    </Modal>
+                                              show = { showModal }
+                                              onHide = {() => setShowModal(false)}
+                                              dialogClassName = "myModal"
+                                              scrollable >
+                                              <Modal.Header
+                                                  className = "image-cover"
+                                                  style = {{ backgroundColor: "#2F80ED" }}
+                                                  closeButton >
+                                              </Modal.Header>
+                                              <Modal.Body
+                                                  className = "modal-body" >
+                                                  <ProviderInfo item = { activeProviders[selectedIndex] }/>
+                                              </Modal.Body>
+                                   </Modal>
                                 }
                             </div>
                         </div>
